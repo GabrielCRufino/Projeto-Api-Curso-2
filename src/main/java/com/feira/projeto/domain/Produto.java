@@ -15,32 +15,35 @@ import javax.persistence.ManyToMany;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-public class Barraca implements Serializable{
+public class Produto implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.IDENTITY) 
 	private Integer id;
-	private String name;
+	private String nome;
+	private Double preco;
+	private Integer quantidadeEstoque;
 	
 	@JsonBackReference
 	@ManyToMany
-	@JoinTable(name = "BARRACA_CATEGORIA",
-		joinColumns = @JoinColumn(name = "barraca_id"),
-		inverseJoinColumns = @JoinColumn(name = "Produto_id")
+	@JoinTable(name = "PRODUTO_CATEGORIA", 
+		joinColumns = @JoinColumn(name = "produto_id"),
+		inverseJoinColumns = @JoinColumn(name = "categoria_id")
 	)
 	private List<Categoria> categorias = new ArrayList<>();
 	
-	public Barraca() {
+	public Produto() {
 	}
 
-	
-	public Barraca(Integer id, String name) {
+	public Produto(Integer id, String nome, Double preco, Integer quantidadeEstoque) {
 		super();
 		this.id = id;
-		this.name = name;
+		this.nome = nome;
+		this.preco = preco;
+		this.quantidadeEstoque = quantidadeEstoque;
 	}
-	
+
 	
 	public Integer getId() {
 		return id;
@@ -50,11 +53,27 @@ public class Barraca implements Serializable{
 	}
 
 	
-	public String getName() {
-		return name;
+	public String getNome() {
+		return nome;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	
+	public Double getPreco() {
+		return preco;
+	}
+	public void setPreco(Double preco) {
+		this.preco = preco;
+	}
+
+	
+	public Integer getQuantidadeEstoque() {
+		return quantidadeEstoque;
+	}
+	public void setQuantidadeEstoque(Integer quantidadeEstoque) {
+		this.quantidadeEstoque = quantidadeEstoque;
 	}
 	
 	
@@ -65,7 +84,7 @@ public class Barraca implements Serializable{
 		this.categorias = categorias;
 	}
 
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -73,7 +92,6 @@ public class Barraca implements Serializable{
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -83,7 +101,7 @@ public class Barraca implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Barraca other = (Barraca) obj;
+		Produto other = (Produto) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -91,7 +109,5 @@ public class Barraca implements Serializable{
 			return false;
 		return true;
 	}
-
 	
-
 }
